@@ -1,0 +1,19 @@
+{% set install = salt.pillar.get("consul:install", {}) %}
+
+[Unit]
+Description="HashiCorp Consul - A service mesh solution"
+Documentation=https://www.consul.io/
+Requires=network-online.target
+After=network-online.target
+
+[Service]
+User={{ install.user }}
+Group={{ install.group }}
+ExecStart=/usr/local/bin/consul agent -config-dir={{ install.config_dir }}
+ExecReload=/usr/local/bin/consul reload
+KillMode=process
+Restart=on-failure
+LimitNOFILE=65536
+
+[Install]
+WantedBy=multi-user.target

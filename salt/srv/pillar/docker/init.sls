@@ -1,0 +1,3 @@
+docker:
+  daemon:
+    debug: true
